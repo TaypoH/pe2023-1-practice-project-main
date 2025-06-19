@@ -1,15 +1,17 @@
 version: '3'
 services:
+
   front-react:
     build:
       context: ./client
+
     environment:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - server-dev
     volumes:
-      - type: bind
-        source: D:/freshcode/module-8/lectures/pe2023-1-practice-project-main/client
-        target: /client
+      - ./client:/client
       - /client/node_modules
     ports:
       - "5000:3000"
@@ -17,21 +19,27 @@ services:
   server-dev:
     build:
       context: ./server
+
     environment:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
-    volumes:
-      - type: bind
-        source: D:/freshcode/module-8/lectures/pe2023-1-practice-project-main/server
-        target: /server
-      - /server/node_modules
     ports:
       - "3000:3000"
+    depends_on:
+      - db-dev
+      - mongo-dev
+    volumes:
+      - ./var/www/html/images:/var/www/html/images
+      - ./server:/server
+      - /server/node_modules
+
 
   mongo-dev:
     image: mongo:4.4.6-bionic
     ports:
       - "27027:27017"
+
+
 
   db-dev:
     image: postgres:13.2-alpine
@@ -41,3 +49,6 @@ services:
       - POSTGRES_DB=todo-dev
     ports:
       - "2345:5432"
+
+volumes:
+  server-dev:
