@@ -52,12 +52,12 @@ router.post(
 //   contestController.getCustomersContests
 // );
 
-router.get(
-  '/getContestById',
-  checkToken.checkToken,
-  basicMiddlewares.canGetContest,
-  contestController.getContestById
-);
+// router.get(
+//   '/getContestById',
+//   checkToken.checkToken,
+//   basicMiddlewares.canGetContest,
+//   contestController.getContestById
+// );
 
 router.post(
   '/getAllContests',
