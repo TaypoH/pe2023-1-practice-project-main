@@ -46,11 +46,11 @@ router.post(
 
 // /users/1/contests
 // /contests/byCustomer
-router.post(
-  '/getCustomersContests',
-  checkToken.checkToken,
-  contestController.getCustomersContests
-);
+// router.post(
+//   '/getCustomersContests',
+//   checkToken.checkToken,
+//   contestController.getCustomersContests
+// );
 
 router.get(
   '/getContestById',
