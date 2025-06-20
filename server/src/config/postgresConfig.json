@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "postgres",
-    "password": "admin",
+    "password": "86248624",
     "database": "squadhelp-dev",
     "host": "localhost",
     "dialect": "postgres",
