@@ -20,7 +20,7 @@ contestsRouter.post(
 );
 
 // GET /contests/byCustomer
-contestsRouter.post(
+contestsRouter.get(
   '/byCustomer',
   checkToken.checkToken,
   contestController.getCustomersContests
