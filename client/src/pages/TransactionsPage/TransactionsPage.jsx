@@ -1,33 +1,22 @@
 import React, { useEffect } from 'react';
 import Header from '../../components/Header/Header';
+// import { format } from 'date-fns';
 import { connect } from 'react-redux';
 import { getTransactions } from '../../store/slices/transactionsSlice';
+import Spinner from '../../components/Spinner/Spinner';
+import TryAgain from '../../components/TryAgain/TryAgain';
 
 function TransactionsPage ({ transactions, isFetching, error, get }) {
   useEffect(() => {
     get();
   }, []);
 
-//   const transactions = [
-//     {
-//       id: 1,
-//       userId: 1,
-//       createdAt: '2025-01-01',
-//       operationType: 'INCOME',
-//       summ: 10,
-//     },
-//     {
-//       id: 2,
-//       userId: 1,
-//       createdAt: '2025-01-01',
-//       operationType: 'INCOME',
-//       summ: 10,
-//     },
-//   ];
-
   const mapTransactions = t => (
     <tr key={t.id}>
-      <td>{t.createdAt}</td>
+      {/* <td>{format(new Date(t.createdAt), 'yyyy-MM-dd')}</td> */}
+      {`${new Date(t.createdAt).getFullYear()}-${new Date(
+        t.createdAt
+      ).getMonth()}-${new Date(t.createdAt).getDate()}`}
       <td>{t.operationType}</td>
       <td>{t.summ}</td>
     </tr>
@@ -36,19 +25,23 @@ function TransactionsPage ({ transactions, isFetching, error, get }) {
   return (
     <>
       <Header />
-      <main>
-        <table>
-          <caption>Your Transactions</caption>
-          <thead>
-            <tr>
-              <th key={1}>Date</th>
-              <th key={2}>Operation Type</th>
-              <th key={3}>Summ</th>
-            </tr>
-          </thead>
-          <tbody>{transactions.map(mapTransactions)}</tbody>
-        </table>
-      </main>
+      {isFetching && <Spinner />}
+      {error && <TryAgain getData={get}/>}
+      {!isFetching && !error && (
+        <main>
+          <table>
+            <caption>Your Transactions</caption>
+            <thead>
+              <tr>
+                <th key={1}>Date</th>
+                <th key={2}>Operation Type</th>
+                <th key={3}>Summ</th>
+              </tr>
+            </thead>
+            <tbody>{transactions.map(mapTransactions)}</tbody>
+          </table>
+        </main>
+      )}
     </>
   );
 }
